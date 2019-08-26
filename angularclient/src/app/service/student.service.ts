@@ -11,7 +11,7 @@ export class StudentService {
   private studentsUrl: string;
 
   constructor(private http: HttpClient) {
-    this.studentsUrl = 'http://localhost:8888/students';
+    this.studentsUrl = 'http://localhost:8888/v1/students';
   }
 
   public findAll(): Observable<Student[]> {
