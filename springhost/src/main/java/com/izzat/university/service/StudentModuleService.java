@@ -33,15 +33,23 @@ public class StudentModuleService {
     }
 
     public List<Student> getListOfStudentByModuleId(String moduleId) {
+        try{
         List<String> listOfStudentByModuleId = getEnrolmentByModuleId(moduleId).stream().map(Enrolment::getStudentId).collect(Collectors.toList());
         return studentRepository.findAllById(listOfStudentByModuleId);
-
+        } catch (Exception e) {
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Module> getListOfModuleByStudentId(String studentId) {
+        try{
         List<String> listOfModulesId = getEnrolmentByStudentId(studentId).stream().map(Enrolment::getModuleId).collect(Collectors.toList());
         return moduleRepository.findAllById(listOfModulesId);
-
+        }catch (Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Enrolment> getEnrolmentByModuleId(String moduleId) {
@@ -49,33 +57,63 @@ public class StudentModuleService {
     }
 
     public List<Enrolment> getEnrolmentByStudentId(String studentId) {
+        try{
         return enrolmentRepository.findAllByStudentId(studentId);
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public Enrolment addEnrolment(CreateEnrolment createEnrolment) {
+        try{
         Enrolment e = new Enrolment();
         e.setModuleId(createEnrolment.getModuleId());
         e.setStudentId(createEnrolment.getStudentId());
         return enrolmentRepository.save(e);
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public Student getStudentById(String id) {
+        try{
         return studentRepository.findById(id).orElse(null);
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Student> getStudentByName(String name) {
+        try{
         return studentRepository.findAllByFirstNameContainingOrLastNameContaining(name, name);
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Student> getAllStudents() {
+        try{
         return studentRepository.findAll();
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public Student addNewStudent(CreateStudent student) {
+        try{
         Student s = new Student();
         s.setFirstName(student.getFirstName());
         s.setLastName(student.getLastName());
         return studentRepository.save(s);
+        } catch (Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 //
 //    public List<Student> findAllbyModuleId(int i){
@@ -88,21 +126,41 @@ public class StudentModuleService {
      */
 
     public Module getModuleById(String id) {
+        try{
         return moduleRepository.findById(id).orElse(null);
+            }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Module> getAllModules() {
+        try{
         return moduleRepository.findAll();
+        }catch(Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public List<Module> getModuleByName(String name) {
+        try{ 
         return moduleRepository.findAllByModuleNameContaining(name);
+        }catch (Exception e){
+            log.catching(e);
+        }
+        return null;
     }
 
     public Module addNewModule(CreateModule module) {
+        try{
         Module m = new Module();
         m.setModuleName(module.getModuleName());
         m.setModuleDetails(module.getModuleDetails());
         return moduleRepository.save(m);
+        }catch(Exception e) {
+            log.catching(e);
+        }
+        return null;
     }
 }
